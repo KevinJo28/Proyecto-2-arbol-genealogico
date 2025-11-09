@@ -6,11 +6,58 @@
       xmlns:local="clr-namespace:SideBar_Nav.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Page4">
+      Title="Page4"
+      
+      >
 
 
 
-    <Grid Background="#f1f3f5">
-        <TextBlock Text="Home" FontFamily="ubuntu" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFB197FC" FontSize="60" FontWeight="Bold"/>
+    <Grid Background="#ffffff">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition  Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="1" CornerRadius="20" BorderThickness="10" Background="#001373"/>
+        <TextBlock Grid.Column="1" Text="Sistema De Árbol Genealógico" FontFamily="ubuntu" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#ffffff" FontSize="20" FontWeight="Bold" Margin="68,24,0,0"/>
+        <TextBlock Grid.Column="1" Text="Ingrese el primer familiar para empezar..." FontFamily="ubuntu" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#525252" FontSize="10" FontWeight="Bold" Margin="107,53,0,0"/>
+        <Border Grid.RowSpan="2"/>
+
+        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,93,100,316" >
+            <TextBlock HorizontalAlignment="Left" Text="Nombre" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+            <TextBox Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" Text="Kevin" Margin="5,5,5,5" TextChanged="TextBox_TextChanged" />
+        </StackPanel>
+
+        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,229,100,176" >
+            <TextBlock HorizontalAlignment="Left" Text="Edad" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+            <TextBox Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" Text="19" Margin="5,5,5,5" />
+        </StackPanel>
+
+        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,134,100,275" >
+            <TextBlock HorizontalAlignment="Left" Text="Dirección (Coordenadas)" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+            <TextBox Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" Text="37.7, -122.2" Margin="5,5,5,5" />
+        </StackPanel>
+
+        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,181,100,212" >
+            <TextBlock HorizontalAlignment="Left" Text="Fecha de nacimiento" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+            <TextBox Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" Text="28/10/2006" Margin="5,5,5,5" />
+        </StackPanel>
+
+        <Border Grid.Column="1" Height="100" BorderBrush="Gray" BorderThickness="2" CornerRadius="5"
+        Background="#FFEFEFEF" Padding="20" Margin="78,279,77,71"
+        AllowDrop="True"
+        DragEnter="DropArea_DragEnter"
+        DragOver="DropArea_DragOver"
+        Drop="DropArea_Drop">
+            <TextBlock Text="Arrastra aquí una imagen" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+        <Image VerticalAlignment="Top" x:Name="MyImageControl" Width="200" Height="200" Margin="10"/>
+        <Button Content="Guardar miembro" Style="{StaticResource Btn1}" Width="100" Height="40" Margin="210,388,90,22" Grid.Column="1"/>
+        <Button Background="red" BorderBrush="#4A0000" Content="Cancelar" Style="{StaticResource Btn1}" Width="100" Height="40" Margin="88,388,212,22" Grid.Column="1" RenderTransformOrigin="0.18,0.475"/>
+
+
+
+
     </Grid>
 </Page>

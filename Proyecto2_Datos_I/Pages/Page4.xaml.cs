@@ -24,5 +24,39 @@ namespace SideBar_Nav.Pages
         {
             InitializeComponent();
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+        private void DropArea_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effects = DragDropEffects.Copy;
+            else
+                e.Effects = DragDropEffects.None;
+        }
+
+        private void DropArea_DragOver(object sender, DragEventArgs e)
+        {
+            e.Handled = true; // Necesario para que Drop funcione correctamente
+        }
+
+        private void DropArea_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (string file in files)
+                {
+                    if (System.IO.Path.GetExtension(file).ToLower() is ".jpg" or ".png" or ".jpeg" or ".bmp")
+                    {
+                        // Cargar imagen en un Image control, por ejemplo:
+                        var bitmap = new BitmapImage(new Uri(file));
+                        MyImageControl.Source = bitmap;
+                    }
+                }
+            }
+        }
     }
 }

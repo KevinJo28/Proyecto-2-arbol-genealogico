@@ -28,3 +28,6 @@ C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows
 C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\Pages\Page2.baml
 C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\Pages\Page3.baml
 C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\Pages\Page4.baml
+C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\Proyecto2_Datos_I.sourcelink.json
+C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\Themes\Estilos.baml
+C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\App.baml
