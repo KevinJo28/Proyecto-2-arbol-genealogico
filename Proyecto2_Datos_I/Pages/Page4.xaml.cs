@@ -51,7 +51,7 @@ namespace SideBar_Nav.Pages
                 {
                     if (System.IO.Path.GetExtension(file).ToLower() is ".jpg" or ".png" or ".jpeg" or ".bmp")
                     {
-                        // Cargar imagen en un Image control, por ejemplo:
+                        // Cargar imagen en un Image control
                         var bitmap = new BitmapImage(new Uri(file));
                         MyImageControl.Source = bitmap;
                     }
