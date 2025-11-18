@@ -17,11 +17,11 @@
 
 
 
-        <Image MouseLeftButtonDown="Imagen_Click"
- Source="/Images/home.png" Margin="11,15,11,0"  VerticalAlignment="Top" Height="40"/>
 
 
-        <ListBox Grid.Column="0" SelectionMode="Single" SelectionChanged="sidebar_SelectionChanged" x:Name="sidebar" Margin="0, 50, 0 50" BorderThickness="0">
+
+        <ListBox Grid.Column="0" SelectionMode="Single" SelectionChanged="sidebar_SelectionChanged" x:Name="sidebar" Margin="0,0,0,50" BorderThickness="0">
+            <local:NavButton NavLink="/Pages/Page6.xaml"  Width="50" Height="50" Margin="0, 10,0,-20" Icon="/Images/home.png"/>
             <local:NavButton NavLink="/Pages/Page1.xaml"  Width="40" Height="40" Margin="0, 30,0,10" Icon="/Images/map.png"/>
             <local:NavButton NavLink="/Pages/Page2.xaml" Width="40" Height="40" Margin="0, 10,0,10" Icon="/Images/tree.png"/>
             <local:NavButton NavLink="/Pages/Page3.xaml" Width="40" Height="40" Margin="0, 10,0,10" Icon="/Images/statistics.png"/>

@@ -33,3 +33,5 @@ C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows
 C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\App.baml
 C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\Pages\Page5.g.cs
 C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\Pages\Page5.baml
+C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\Pages\Page6.g.cs
+C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\Pages\Page6.baml
