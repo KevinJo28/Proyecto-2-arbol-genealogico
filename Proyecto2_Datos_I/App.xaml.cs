@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proyecto2_Datos_I_Grafo;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,6 @@ namespace Proyecto2_Datos_I
     /// </summary>
     public partial class App : Application
     {
+        public Grafo Family { get; } = new Grafo();
     }
 }

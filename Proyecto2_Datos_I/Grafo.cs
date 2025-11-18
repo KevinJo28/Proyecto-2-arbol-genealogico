@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 
-namespace Proyecto2_Datos_I
+namespace Proyecto2_Datos_I_Grafo
 {
-    class Grafo
+    public class Grafo
     {
         private readonly Dictionary<int, PersonNode> people = new();
         public IEnumerable<PersonNode> PeopleRedOnly => people.Values;
@@ -30,11 +30,50 @@ namespace Proyecto2_Datos_I
                 return null; // No existe
             }
         }
+        public bool LinkParentChild(PersonNode parent, PersonNode child, bool onlyTwoParents = true)
+        {
+            if (parent == null || child == null)  return  false; 
+            if (ReferenceEquals(parent, child)) return false;//throw new InvalidOperationException("Una persona no puede ser su propio padre/hijo.");
+            if (DetectionCycle(parent, child)) return false; //throw new InvalidOperationException("El enlace crearía un ciclo en el árbol genealógico.");
+            if (onlyTwoParents && child.Parents.Count >= 2)
+                throw new InvalidOperationException("Este hijo ya tiene 2 padres asignados.");
+
+            if (!parent.Children.Contains(child)) parent.Children.Add(child);
+            if (!child.Parents.Contains(parent)) child.Parents.Add(parent);
+            return true;
+        }
+
+        public bool LinkPartners(PersonNode a, PersonNode b)
+        {
+
+            if (ReferenceEquals(a, b)) return false; //throw new InvalidOperationException("Una persona no puede ser su propia pareja.");
+            a.Partners.Add(b);
+            b.Partners.Add(a);
+            return true;
+        }
+
+        private bool DetectionCycle(PersonNode parent, PersonNode child)
+        {
+            // ¿Existe un camino child -> ... -> parent?
+            var visited = new HashSet<int>();
+            var stack = new Stack<PersonNode>();
+            stack.Push(child);
+
+            while (stack.Count > 0)
+            {
+                var u = stack.Pop();
+                if (!visited.Add(u.Id)) continue;
+                if (ReferenceEquals(u, parent)) return true;
+                foreach (var c in u.Children)
+                    stack.Push(c);
+            }
+            return false;
+        }
 
 
     }
 
-    class PersonNode
+    public class PersonNode
     {
         int id;
         public string fullName;

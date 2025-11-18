@@ -13,11 +13,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Proyecto2_Datos_I_Grafo;
+
 
 namespace Proyecto2_Datos_I
 {
     public partial class MainWindow : Window
     {
+    
+        public Grafo Family { get; } = new Grafo();
+
         public MainWindow()
         {
 
@@ -31,7 +36,7 @@ namespace Proyecto2_Datos_I
 
             var selected = sidebar.SelectedItem as NavButton;
 
-            navframe.Navigate(selected.NavLink);
+            navframe.Navigate(selected?.NavLink);
         }
         private void Imagen_Click(object sender, MouseButtonEventArgs e)
         {

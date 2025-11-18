@@ -1,0 +1,62 @@
+﻿<Page x:Class="SideBar_Nav.Pages.Page5"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SideBar_Nav.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Page5"
+      
+      >
+
+
+
+    <Grid Background="#ffffff">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition  Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="1" CornerRadius="20" BorderThickness="10" Background="#001373"/>
+        <TextBlock Grid.Column="1" Text="Sistema De Árbol Genealógico" FontFamily="ubuntu" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#ffffff" FontSize="20" FontWeight="Bold" Margin="68,24,0,0"/>
+        <TextBlock Grid.Column="1" Text="Coloque los parentescos con las personas ya agregadas" FontFamily="ubuntu" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#525252" FontSize="10" FontWeight="Bold" Margin="81,53,0,0"/>
+        <Border Grid.RowSpan="2"/>
+
+        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,70,100,339" >
+            <TextBlock HorizontalAlignment="Left" Text="Madre" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+            <ComboBox  Margin="0,5,0,0" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" DisplayMemberPath="FullName" Name="cmbPersonas"/>
+
+        </StackPanel>
+
+        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,212,100,193" />
+
+        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,117,100,292" >
+            <TextBlock HorizontalAlignment="Left" Text="Padre" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+           
+            <ComboBox  Margin="0,5,0,0" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" DisplayMemberPath="FullName" Name="cmbPersonas2"/>
+        </StackPanel>
+
+        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,164,100,229" >
+            <TextBlock HorizontalAlignment="Left" Text="Pareja" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+            
+            <ComboBox  Margin="0,5,0,0" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" DisplayMemberPath="FullName" Name="cmbPersonas3"/>
+        </StackPanel>
+
+        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,206,100,187" >
+            <TextBlock HorizontalAlignment="Left" Text="Yo" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+
+            <ComboBox  Margin="0,5,0,0" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" DisplayMemberPath="FullName" Name="cmbPersonas4"/>
+        </StackPanel>
+
+        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,257,100,148" />
+        <Image VerticalAlignment="Top" x:Name="MyImageControl" Width="200" Height="200" Margin="10"/>
+        <Button Content="➤" Click="NextPage2" Style="{StaticResource Btn1}" Height="40" Margin="340,390,19,20" Grid.Column="1"/>
+
+
+
+
+
+    </Grid>
+</Page>
