@@ -10,7 +10,10 @@ namespace Proyecto2_Datos_I_Grafo
 {
     public class Grafo
     {
+        //Diccionario de nodos relacionando cada uno con su id
         private readonly Dictionary<int, PersonNode> people = new();
+ 
+        //Lista de nodos para poder utilizar en otras partes (solo se puede ver no se puede editar desde afuera)
         public IEnumerable<PersonNode> PeopleRedOnly => people.Values;
 
         public void Add(string name, string coords, DateTime birthdate, int age, BitmapImage bitmap, int id, string imagePath)
@@ -30,6 +33,8 @@ namespace Proyecto2_Datos_I_Grafo
                 return null; // No existe
             }
         }
+
+        //Método para enlazar hijos y padres, recibe el nodo del padre y el del hijo. Esta solo para poder acceptar dos padres por hijo.
         public bool LinkParentChild(PersonNode parent, PersonNode child, bool onlyTwoParents = true)
         {
             if (parent == null || child == null)  return  false; 
@@ -43,6 +48,7 @@ namespace Proyecto2_Datos_I_Grafo
             return true;
         }
 
+        //Método para enlazar parejas
         public bool LinkPartners(PersonNode a, PersonNode b)
         {
 
@@ -109,7 +115,7 @@ namespace Proyecto2_Datos_I_Grafo
             set { age = value; }
         }
 
-        public BitmapImage BitMap
+        public BitmapImage BitMap 
         {
             get { return bitMap; }
             set { bitMap = value; }
@@ -119,7 +125,7 @@ namespace Proyecto2_Datos_I_Grafo
 
 
 
-
+        //Constructor
         public PersonNode(string name, string coords, DateTime birthdate, int age, BitmapImage bitmap, int id, string imagePath)
         {
             //Atributos de cada instancia
@@ -146,7 +152,7 @@ namespace Proyecto2_Datos_I_Grafo
         // Relaciones:
         public List<PersonNode> Parents { get; } = new();
         public List<PersonNode> Children { get; } = new();
-        public HashSet<PersonNode> Partners { get; } = new();
+        public HashSet<PersonNode> Partners { get; } = new(); //Se usa un HasSet ya que no es necesario una lista al ser una relación solo de dos personas
 
     }
 }

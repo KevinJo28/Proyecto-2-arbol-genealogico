@@ -54,5 +54,13 @@
         HorizontalAlignment="Right"
         VerticalAlignment="Bottom"
         Margin="16"/>
+
+        <Button Content="Editar"
+        Width="100" Height="50" FontSize="20"
+        Click="BtnEditar"
+        Style="{StaticResource Btn1}"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Bottom"
+        Margin="0,0,121,16"/>
     </Grid>
 </Page>

@@ -15,7 +15,7 @@ namespace Proyecto2_Datos_I
     /// </summary>
     public partial class App : Application
     {
-        public Grafo Family { get; private set; } = new Grafo();
+        public Grafo Family { get; private set; } = new Grafo();//Instancia principal del grafo
 
         protected override void OnStartup(StartupEventArgs e) // al iniciar la aplicación cargar el grafo desde JSON
         { 

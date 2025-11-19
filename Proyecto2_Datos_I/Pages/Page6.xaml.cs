@@ -50,7 +50,12 @@ namespace SideBar_Nav.Pages
             NavigationService?.Navigate(new Uri("Pages/Page4.xaml", UriKind.Relative));
         }
 
-       
+        public void BtnEditar(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Uri("Pages/Page5.xaml", UriKind.Relative));
+        }
+
+
     }
 
     
