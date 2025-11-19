@@ -94,7 +94,7 @@ namespace SideBar_Nav.Pages {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Proyecto2_Datos_I;V1.0.0.0;component/pages/page5.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Proyecto2_Datos_I;component/pages/page5.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Pages\Page5.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
