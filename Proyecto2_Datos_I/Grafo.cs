@@ -13,9 +13,9 @@ namespace Proyecto2_Datos_I_Grafo
         private readonly Dictionary<int, PersonNode> people = new();
         public IEnumerable<PersonNode> PeopleRedOnly => people.Values;
 
-        public void Add(string name, string coords, DateTime birthdate, int age, BitmapImage bitmap, int id)
+        public void Add(string name, string coords, DateTime birthdate, int age, BitmapImage bitmap, int id, string imagePath)
         {
-            PersonNode p = new(name, coords, birthdate, age, bitmap, id) ;
+            PersonNode p = new(name, coords, birthdate, age, bitmap, id, imagePath) ;
             people[p.Id] = p;
 
         }
@@ -81,6 +81,7 @@ namespace Proyecto2_Datos_I_Grafo
         public DateTime birthDate;
         public int age;
         public BitmapImage bitMap;
+        public string ImagePath { get; set; } = string.Empty; // ruta de la imagen
 
         public int Id   // property
         {
@@ -119,7 +120,7 @@ namespace Proyecto2_Datos_I_Grafo
 
 
 
-        public PersonNode(string name, string coords, DateTime birthdate, int age, BitmapImage bitmap, int id)
+        public PersonNode(string name, string coords, DateTime birthdate, int age, BitmapImage bitmap, int id, string imagePath)
         {
             //Atributos de cada instancia
             this.fullName = name;
@@ -128,6 +129,7 @@ namespace Proyecto2_Datos_I_Grafo
             this.age = age;
             this.bitMap = bitmap; //Mapa de bits de la imagen de la persona 
             this.id = id; // Cédula personal
+            this.ImagePath = imagePath ?? string.Empty; // ruta de la imagen
         }
 
         //Desplegue de la información completa de la persona

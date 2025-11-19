@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\obj\Debug\net7.0-windows\
+C:\Users\HP\Proyecto-2-arbol-genealogico\Proyecto2_Datos_I\obj\Debug\net7.0-windows\
 Proyecto2_Datos_I
 none
 false
-TRACE;DEBUG;NET;NET7_0;NETCOREAPP
-C:\Users\PC\Desktop\Proyecto2_Datos_I\Proyecto2_Datos_I\App.xaml
+TRACE;DEBUG;NET;NET7_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+C:\Users\HP\Proyecto-2-arbol-genealogico\Proyecto2_Datos_I\App.xaml
 849860961
 
 1211857801
-207-1233437076
+207-1141687886
 MainWindow.xaml;Pages\Page1.xaml;Pages\Page2.xaml;Pages\Page3.xaml;Pages\Page4.xaml;Pages\Page5.xaml;Themes\Estilos.xaml;Themes\Generic.xaml;
 
-False
+True
 
