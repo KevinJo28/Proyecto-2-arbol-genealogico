@@ -10,6 +10,9 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Pages\Page6.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\Page5.xaml">
       <SubType>Designer</SubType>
     </Page>
