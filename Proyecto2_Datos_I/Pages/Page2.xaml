@@ -3,12 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Árbol">
     <Grid>
-        <!-- Panel donde se dibuja el árbol -->
         <ScrollViewer>
             <StackPanel x:Name="TreePanel" Margin="40" />
         </ScrollViewer>
 
-        <!-- Botón para ir al formulario (Page4) -->
         <Button Content="Agregar"
                 Width="120"
                 Height="50"

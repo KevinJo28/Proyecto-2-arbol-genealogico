@@ -8,11 +8,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace SideBar_Nav.Pages   // 👈 MISMO NAMESPACE QUE EN EL XAML
+namespace SideBar_Nav.Pages   
 {
-    /// <summary>
-    /// Interaction logic for Page2.xaml
-    /// </summary>
+    
     public partial class Page2 : Page
     {
         private readonly Grafo _family;
@@ -21,7 +19,6 @@ namespace SideBar_Nav.Pages   // 👈 MISMO NAMESPACE QUE EN EL XAML
         {
             InitializeComponent();
 
-            // Tomamos el grafo (la “mochila” con la familia)
             _family = ((App)Application.Current).Family;
 
             DibujarArbol();
@@ -38,7 +35,6 @@ namespace SideBar_Nav.Pages   // 👈 MISMO NAMESPACE QUE EN EL XAML
         {
             TreePanel.Children.Clear();
 
-            // IMPORTANTE: lo convertimos a lista para usar .Count sin problemas
             var todas = _family.PeopleRedOnly.ToList();
 
             if (todas.Count == 0)
@@ -51,18 +47,14 @@ namespace SideBar_Nav.Pages   // 👈 MISMO NAMESPACE QUE EN EL XAML
                 return;
             }
 
-            // 1. Buscar raíces (personas sin padres)
             var roots = todas.Where(p => p.Parents.Count == 0).ToList();
             if (roots.Count == 0)
             {
-                // Por si acaso todas tienen padres, usamos todas como nivel 0
                 roots = todas;
             }
 
-            // 2. Construir niveles (generaciones)
             var niveles = BuildLevels(roots);
 
-            // 3. Crear una fila por nivel
             foreach (var kv in niveles.OrderBy(k => k.Key))
             {
                 int nivel = kv.Key;
@@ -84,7 +76,6 @@ namespace SideBar_Nav.Pages   // 👈 MISMO NAMESPACE QUE EN EL XAML
             }
         }
 
-        // Agrupa personas por nivel (0 = raíces, 1 = hijos, 2 = nietos…)
         private Dictionary<int, List<PersonNode>> BuildLevels(List<PersonNode> roots)
         {
             var niveles = new Dictionary<int, List<PersonNode>>();
@@ -97,14 +88,13 @@ namespace SideBar_Nav.Pages   // 👈 MISMO NAMESPACE QUE EN EL XAML
             while (cola.Count > 0)
             {
                 var (node, nivel) = cola.Dequeue();
-                if (!visitados.Add(node)) continue; // ya lo vimos
+                if (!visitados.Add(node)) continue;
 
                 if (!niveles.ContainsKey(nivel))
                     niveles[nivel] = new List<PersonNode>();
 
                 niveles[nivel].Add(node);
 
-                // Los hijos van al siguiente nivel
                 foreach (var hijo in node.Children)
                     cola.Enqueue((hijo, nivel + 1));
             }
@@ -112,7 +102,6 @@ namespace SideBar_Nav.Pages   // 👈 MISMO NAMESPACE QUE EN EL XAML
             return niveles;
         }
 
-        // Tarjetita visual de una persona
         private Border CrearTarjetaPersona(PersonNode p)
         {
             var borde = new Border
@@ -129,7 +118,6 @@ namespace SideBar_Nav.Pages   // 👈 MISMO NAMESPACE QUE EN EL XAML
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
-            // Foto
             if (p.BitMap != null)
             {
                 stack.Children.Add(new Image
@@ -141,7 +129,6 @@ namespace SideBar_Nav.Pages   // 👈 MISMO NAMESPACE QUE EN EL XAML
                 });
             }
 
-            // Nombre
             stack.Children.Add(new TextBlock
             {
                 Text = p.FullName,
@@ -150,7 +137,6 @@ namespace SideBar_Nav.Pages   // 👈 MISMO NAMESPACE QUE EN EL XAML
                 TextAlignment = TextAlignment.Center
             });
 
-            // ID
             stack.Children.Add(new TextBlock
             {
                 Text = $"ID: {p.Id}",
