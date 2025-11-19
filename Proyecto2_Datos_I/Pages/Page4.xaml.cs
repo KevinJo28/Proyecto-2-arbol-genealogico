@@ -25,6 +25,7 @@ namespace SideBar_Nav.Pages
     public partial class Page4 : Page
     {
         BitmapImage? bitmapGlobal;
+        string? imagePathGlobal;
 
         public Page4()
         {
@@ -61,6 +62,7 @@ namespace SideBar_Nav.Pages
                         var bitmap = new BitmapImage(new Uri(file));
                         MyImageControl.Source = bitmap;
                         bitmapGlobal = new BitmapImage(new Uri(file));
+                        imagePathGlobal = file; // guardar la ruta de la imagen
                     }
                 }
             }
@@ -68,13 +70,13 @@ namespace SideBar_Nav.Pages
 
         private void NextPage(object sender, RoutedEventArgs e)
         {
-            if(this.name.Text == null || this.location.Text == null || this.birthDay.Text == null || this.age.Text == null || bitmapGlobal == null || this.id.Text == null)
+            if(this.name.Text == null || this.location.Text == null || this.birthDay.Text == null || this.age.Text == null || bitmapGlobal == null || this.id.Text == null || string.IsNullOrWhiteSpace(imagePathGlobal))
             {
                 MessageBox.Show("Todos los valores tiene que estar llenos");
                 return;
 
             }
-            ((App)Application.Current).Family.Add(this.name.Text, this.location.Text, DateTime.Parse(this.birthDay.Text), int.Parse(this.age.Text), bitmapGlobal, int.Parse(this.id.Text));
+            ((App)Application.Current).Family.Add(this.name.Text, this.location.Text, DateTime.Parse(this.birthDay.Text), int.Parse(this.age.Text), bitmapGlobal, int.Parse(this.id.Text), imagePathGlobal);
             NavigationService?.Navigate(new Uri("Pages/Page5.xaml", UriKind.Relative));
         }
     }
