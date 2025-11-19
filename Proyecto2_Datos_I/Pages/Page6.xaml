@@ -1,0 +1,58 @@
+﻿<Page x:Class="SideBar_Nav.Pages.Page6"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SideBar_Nav.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Page6">
+
+    <Grid Background="#f1f3f5">
+        <TextBlock Text="Familia" FontFamily="ubuntu" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Blue" FontSize="20" FontWeight="Bold" Margin="25,10,0,0"/>
+       
+            <ListBox x:Name="lstPeople" Margin="22,39,22,24">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Width="658" Height="256" Orientation="Horizontal" Margin="6,4">
+
+                        <Image Source="{Binding BitMap}" Width="256" Height="256" 
+                       Stretch="Uniform" Margin="0,0,8,0"/>
+                        <StackPanel>
+                            <TextBlock FontSize="30" Text="{Binding FullName}" FontWeight="SemiBold"/>
+                            <TextBlock FontSize="30" Text="Padres: " Opacity="0.7" />
+                            <TextBlock FontSize="30" Text="{Binding Id}" Opacity="0.7" />
+                            <TextBlock FontSize="30" Text="{Binding Age}" Opacity="0.7" />
+                            
+                            
+                        </StackPanel>
+
+
+                        <ItemsControl ItemsSource="{Binding Parents}" Margin="0,43,0,0" Width="100">
+                            <ItemsControl.ItemTemplate >
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding FullName}" FontSize="16" Foreground="#6B7280"/>
+                           
+                                    </StackPanel>
+                                    
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+
+                    </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+
+        <Button Content="Agregar"
+        Width="100" Height="50" FontSize="20"
+        Click="BtnAdd"
+        Style="{StaticResource Btn1}"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Bottom"
+        Margin="16"/>
+    </Grid>
+</Page>

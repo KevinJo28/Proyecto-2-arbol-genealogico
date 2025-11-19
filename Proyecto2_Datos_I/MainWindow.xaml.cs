@@ -27,7 +27,7 @@ namespace Proyecto2_Datos_I
         {
 
             InitializeComponent();
-            navframe.Navigate(new Uri("Pages/Page4.xaml", UriKind.RelativeOrAbsolute));
+            navframe.Navigate(new Uri("Pages/Page6.xaml", UriKind.RelativeOrAbsolute));
 
         }
 
@@ -40,7 +40,7 @@ namespace Proyecto2_Datos_I
         }
         private void Imagen_Click(object sender, MouseButtonEventArgs e)
         {
-            navframe.Navigate(new Uri("Pages/Page4.xaml", UriKind.RelativeOrAbsolute));
+            navframe.Navigate(new Uri("Pages/Page6.xaml", UriKind.RelativeOrAbsolute));
           
 
 

@@ -86,7 +86,7 @@ namespace SideBar_Nav.Pages
             if (me != null)
             {
                 MessageBox.Show("Se ha agregado a " + me.FullName + " satisfactoriamente \n" + "Padre: " + padreName + "\n Madre: " + madreName + "\n Pareja: " + parejaName);
-                NavigationService?.Navigate(new Uri("Pages/Page4.xaml", UriKind.Relative));
+                NavigationService?.Navigate(new Uri("Pages/Page6.xaml", UriKind.Relative));
             }
             else
             {
