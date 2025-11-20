@@ -9,6 +9,7 @@
       Title="Page1">
 
     <Grid Background="#f1f3f5">
-        <Image Source="/Images/MapaDelMundojpg.jpg" Stretch="UniformToFill"/>
+        <Image x:Name="WorldMap" Source="/Images/MapaDelMundojpg.jpg" Stretch="UniformToFill"/>
+        <Canvas x:Name="MarkersCanvas" Background="Transparent"/>
     </Grid>
 </Page>

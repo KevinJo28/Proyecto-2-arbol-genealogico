@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Globalization;
 
 
 
@@ -70,14 +70,62 @@ namespace SideBar_Nav.Pages
 
         private void NextPage(object sender, RoutedEventArgs e)
         {
-            if(this.name.Text == null || this.location.Text == null || this.birthDay.Text == null || this.age.Text == null || bitmapGlobal == null || this.id.Text == null || string.IsNullOrWhiteSpace(imagePathGlobal))
-            {
-                MessageBox.Show("Todos los valores tiene que estar llenos");
-                return;
+            // Validación básica de campos vacíos 
+            if (string.IsNullOrWhiteSpace(this.name.Text) || 
+                string.IsNullOrWhiteSpace(this.location.Text) || 
+                string.IsNullOrWhiteSpace(this.birthDay.Text) || 
+                string.IsNullOrWhiteSpace(this.age.Text) || 
+                string.IsNullOrWhiteSpace(this.id.Text) || 
+                bitmapGlobal == null || 
+                string.IsNullOrWhiteSpace(imagePathGlobal)) 
+            { 
+                MessageBox.Show("Todos los valores tienen que estar llenos.");
+                return; 
+            } 
 
-            }
-            ((App)Application.Current).Family.Add(this.name.Text, this.location.Text, DateTime.Parse(this.birthDay.Text), int.Parse(this.age.Text), bitmapGlobal, int.Parse(this.id.Text), imagePathGlobal);
-            NavigationService?.Navigate(new Uri("Pages/Page5.xaml", UriKind.Relative));
+            // Validar formato de coordenadas: "x,y" en píxeles 
+            var coordsText = this.location.Text.Trim(); 
+            var parts = coordsText.Split(','); 
+            if (parts.Length != 2 || 
+                !double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out double x) || 
+                !double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double y)) 
+            { 
+                MessageBox.Show("Las coordenadas deben tener el formato \"x,y\" en píxeles. Ejemplo: 350,420"); 
+                return; 
+            } 
+
+            // Validar edad e id 
+            if (!int.TryParse(this.age.Text, out int age)) 
+            { 
+                MessageBox.Show("La edad debe ser un número entero."); 
+                return; 
+            } 
+
+            if (!int.TryParse(this.id.Text, out int id)) 
+            { 
+                MessageBox.Show("La cédula debe ser un número entero.");
+                return;
+            } 
+
+            // Validar fecha 
+            if (!DateTime.TryParse(this.birthDay.Text, out DateTime birthDate)) 
+            { 
+                MessageBox.Show("La fecha de nacimiento no tiene un formato válido."); 
+                return; 
+            } 
+
+            ((App)Application.Current).Family.Add( 
+                this.name.Text,
+                coordsText,
+                birthDate,
+                age,
+                bitmapGlobal,
+                id,
+                imagePathGlobal
+            );
+
+            NavigationService?.Navigate(new Uri("Pages/Page5.xaml", UriKind.Relative)); 
         }
+
     }
 }
