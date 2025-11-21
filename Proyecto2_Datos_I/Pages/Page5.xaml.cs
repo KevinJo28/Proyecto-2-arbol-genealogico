@@ -46,27 +46,8 @@ namespace SideBar_Nav.Pages
                 e.Effects = DragDropEffects.None;
         }
 
-        private void DropArea_DragOver(object sender, DragEventArgs e)
-        {
-            e.Handled = true; // Necesario para que Drop funcione correctamente
-        }
-
-        private void DropArea_Drop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                foreach (string file in files)
-                {
-                    if (System.IO.Path.GetExtension(file).ToLower() is ".jpg" or ".png" or ".jpeg" or ".bmp")
-                    {
-                        // Cargar imagen en un Image control
-                        var bitmap = new BitmapImage(new Uri(file));
-                        MyImageControl.Source = bitmap;
-                    }
-                }
-            }
-        }
+        
+        
 
         private void NextPage2(object sender, RoutedEventArgs e)
         {

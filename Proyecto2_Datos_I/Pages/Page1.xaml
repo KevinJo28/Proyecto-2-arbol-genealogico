@@ -8,7 +8,69 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page1">
 
+    <!-- Grid principal para superponer elementos -->
     <Grid Background="#f1f3f5">
-        <Image Source="/Images/MapaDelMundojpg.jpg" Stretch="UniformToFill"/>
+
+        <!-- MAPA (FONDO COMPLETO) -->
+        <Image x:Name="WorldMap"
+               Source="pack://application:,,,/Proyecto2_Datos_I;component/Images/mapworld.jpg"
+               Stretch="UniformToFill"/>
+
+        <!-- LÍNEAS SOBRE EL MAPA -->
+        <Canvas x:Name="LinesCanvas"
+                IsHitTestVisible="False"
+                Background="Transparent"/>
+
+        <!-- MARCADORES SOBRE EL MAPA -->
+        <Canvas x:Name="MarkersCanvas"
+                Background="Transparent"/>
+
+        <!-- PANEL FLOTANTE (ISLA) SOBRE EL MAPA -->
+        <Border x:Name="FloatingPanel"
+                CornerRadius="18"             
+                Background="#181818"
+            
+                Padding="20"
+            
+                Width="190"
+            
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Margin="0,0,40,0"
+            
+            Opacity="0.82" Height="600" RenderTransformOrigin="0.5,0.5">
+
+            <StackPanel>
+
+                <TextBlock Text="Distancias"
+                           FontWeight="Bold"
+                           FontSize="24"           
+                           Foreground="White"
+                           Margin="0,0,0,4"/>
+
+                <TextBlock Text="desde:"
+                           Foreground="#bbbbbb"
+                           FontSize="16"
+                           Margin="0,0,0,2"/>
+
+                <TextBlock x:Name="SelectedPersonName"
+                           Foreground="White"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,8"/>
+
+                <Border Height="1"
+                        Background="#333"
+                        Margin="0,0,0,8"/>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              Height="400">
+                    <StackPanel x:Name="DistancesPanel"
+                                Margin="0,0,0,4"/>
+                </ScrollViewer>
+
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>
+

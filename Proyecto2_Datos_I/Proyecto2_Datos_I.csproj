@@ -11,14 +11,14 @@
   <ItemGroup>
     <None Remove="Images\home.png" />
     <None Remove="Images\map.png" />
-    <None Remove="Images\MapaDelMundojpg.jpg" />
+    <None Remove="Images\mapworld.jpg" />
     <None Remove="Images\mapas-de-google.png" />
     <None Remove="Images\statistics.png" />
     <None Remove="Images\tree.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\MapaDelMundojpg.jpg">
+    <Resource Include="Images\mapworld.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\statistics.png">
