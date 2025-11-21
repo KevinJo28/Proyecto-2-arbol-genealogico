@@ -19,56 +19,79 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="1" CornerRadius="20" BorderThickness="10" Background="#001373"/>
-        <TextBlock Grid.Column="1" Text="Sistema De Árbol Genealógico" FontFamily="ubuntu" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#ffffff" FontSize="20" FontWeight="Bold" Margin="68,24,0,0"/>
-        <TextBlock Grid.Column="1" Text="Ingrese el primer familiar para empezar..." FontFamily="ubuntu" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#525252" FontSize="10" FontWeight="Bold" Margin="107,53,0,0"/>
+        <Border Grid.Column="1" CornerRadius="20" BorderThickness="10" Background="#001373" Margin="0,-10,0,0"/>
+
         <Border Grid.RowSpan="2"/>
+        <Viewbox Grid.Column="1" Stretch="Uniform" StretchDirection="Both"  MinWidth="300" MaxWidth="650" Margin="15" >
+            <StackPanel Grid.Column="1"  Orientation="Vertical" VerticalAlignment="Center">
+                <StackPanel VerticalAlignment="Top" Margin="0,-5,0,15" >
+                    <TextBlock  Text="Sistema De Árbol Genealógico" FontFamily="ubuntu" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#ffffff" FontSize="20" FontWeight="Bold" Margin="0,0,0,0"/>
+                    <TextBlock  Text="Ingrese el primer familiar para empezar..." FontFamily="ubuntu" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#525252" FontSize="10" FontWeight="Bold" Margin="0,0,0,0"/>
 
-        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,70,100,339" >
-            <TextBlock HorizontalAlignment="Left" Text="Nombre" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
-            <TextBox Name="name" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" Text="Kevin" Margin="5,5,5,5" TextChanged="TextBox_TextChanged" />
-        </StackPanel>
+                </StackPanel>
+                <StackPanel  Grid.Column="1" Orientation="Vertical" MaxWidth="250" MaxHeight="40" Margin="2">
+                    <TextBlock HorizontalAlignment="Left" Text="Nombre" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold" />
+                    <TextBox Name="name" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" MinWidth="200" MaxWidth="400" Text="Kevin" Margin="5,5,5,5" TextChanged="TextBox_TextChanged" />
+                </StackPanel>
 
-        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,212,100,193" >
-            <TextBlock HorizontalAlignment="Left" Text="Edad" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
-            <TextBox Name="age" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" Text="19" Margin="5,5,5,5" />
-        </StackPanel>
+                <StackPanel  Grid.Column="1"  Orientation="Vertical"  MaxWidth="250" MaxHeight="40" Margin="2"  >
+                    <TextBlock HorizontalAlignment="Left" Text="Edad" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+                    <TextBox Name="age" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" MinWidth="200" MaxWidth="400" Text="19" Margin="5,5,5,5" />
+                </StackPanel>
 
-        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,117,100,292" >
-            <TextBlock HorizontalAlignment="Left" Text="Dirección (Coordenadas)" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
-            <TextBox Name="location" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" Text="37.7, -122.2" Margin="5,5,5,5" />
-        </StackPanel>
+                <StackPanel  Grid.Column="1"  Orientation="Vertical"  MaxWidth="250" MaxHeight="40"  Margin="2" >
+                    <TextBlock HorizontalAlignment="Left" Text="Dirección (Coordenadas)" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+                    <TextBox Name="location" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" MinWidth="200" MaxWidth="400" Text="537.7, 122.2" Margin="5,5,5,5" />
+                </StackPanel>
 
-        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,164,100,229" >
-            <TextBlock HorizontalAlignment="Left" Text="Fecha de nacimiento" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
-            <DatePicker Name="birthDay" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="26" Text="28/10/2006" Margin="5,5,5,5" />
-        </StackPanel>
+                <StackPanel  Grid.Column="1"  Orientation="Vertical"    MaxWidth="250" MaxHeight="50"  Margin="2">
+                    <TextBlock HorizontalAlignment="Left" Text="Fecha de nacimiento" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+                    <DatePicker Name="birthDay" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" MinWidth="200" MaxWidth="400" Height="26" Text="28/10/2006" Margin="5,5,5,5" />
+                </StackPanel>
 
-        <StackPanel  Grid.Column="1"  Orientation="Vertical" Width="200" Margin="100,257,100,148" >
-            <TextBlock HorizontalAlignment="Left" Text="Cédula" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
-            <TextBox Name="id" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" Width="180" Height="20" Text="119790562" Margin="5,5,5,5" />
-        </StackPanel>
-        
-        
-        
+                <StackPanel  Grid.Column="1"  Orientation="Vertical"  MaxWidth="250" MaxHeight="50"  Margin="2" >
+                    <TextBlock HorizontalAlignment="Left" Text="Cédula" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold"/>
+                    <TextBox Name="id" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" MinWidth="200" MaxWidth="400" Height="20" Text="119790562" />
+                </StackPanel>
+                <Border
+ 
+                BorderBrush="Gray" BorderThickness="2" CornerRadius="5"
+                Background="#FFEFEFEF" Padding="20"
+                AllowDrop="True"
+                DragEnter="DropArea_DragEnter"
+                DragOver="DropArea_DragOver"
+                Drop="DropArea_Drop"
+                    Margin="10">
+                    <TextBlock Text="Arrastra aquí una imagen" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <Button 
+                Content="➤" FontSize="10" 
+                MinWidth="100" 
+                MaxWidth="200" 
+                MinHeight="30" 
+                MaxHeight="100"
+                Click="NextPage" 
+                Style="{StaticResource Btn1}"
+                    Margin="10"
+                    />
 
-        <Border Width="220" Height="59"  Grid.Column="1" BorderBrush="Gray" BorderThickness="2" CornerRadius="5"
-        Background="#FFEFEFEF" Padding="20" Margin="90,302,90,89"
-        AllowDrop="True"
-        DragEnter="DropArea_DragEnter"
-        DragOver="DropArea_DragOver"
-        Drop="DropArea_Drop">
-            <TextBlock Text="Arrastra aquí una imagen" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        </Border>
-        
+
+
+
+
+
+            </StackPanel>
+
+
+        </Viewbox>
         <Image VerticalAlignment="Top" x:Name="MyImageControl" Width="200" Height="200" Margin="10"/>
-        <Button Content="➤" FontSize="5" Width="100PX" Height="30" Click="NextPage" Style="{StaticResource Btn1}" Grid.Column="1" Margin="232,380,68,40"/>
-        
 
 
 
 
-        
+
+
+
     </Grid>
-    
+
 </Page>
