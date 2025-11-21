@@ -196,8 +196,8 @@ namespace SideBar_Nav.Pages
             double cy0 = y0 + 29; // el centro en y es igual a x + radio
             if (_selectedPerson != null && origen == _selectedPerson) 
             { 
-                cx0 = x0 + 32; 
-                cy0 = y0 + 32; 
+                cx0 = x0 + 29; 
+                cy0 = y0 + 29; 
             }
 
             var distancias = grafo.PeopleRedOnly 

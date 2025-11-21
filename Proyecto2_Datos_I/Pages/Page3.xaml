@@ -1,14 +1,163 @@
 ﻿<Page x:Class="SideBar_Nav.Pages.Page3"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:SideBar_Nav.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d"
+      d:DesignHeight="600" d:DesignWidth="900"
       Title="Page3">
 
-    <Grid Background="#f1f3f5">
-        <TextBlock Text="PAGE 3" FontFamily="ubuntu" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFB197FC" FontSize="60" FontWeight="Bold"/>
-    </Grid>
+	<Grid Background="Transparent" Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<!-- Título principal -->
+		<TextBlock Grid.Row="0"
+                   Text="Estadísticas de distancia entre familiares"
+                   FontSize="28"             
+		FontWeight="Bold"
+		Foreground="#222"
+		Margin="0,0,0,16"/>
+
+		<!-- Dos columnas: datos en cuadros a la izquierda, resumen a la derecha -->
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition Width="3*"/>
+			</Grid.ColumnDefinitions>
+
+			<!-- Cuadros apilados verticalmente -->
+			<StackPanel Grid.Column="0"
+                        Orientation="Vertical"
+                        VerticalAlignment="Stretch"
+                        Margin="0,0,24,0">
+				<!-- separación respecto a la derecha -->
+
+				<!-- Cuadro para el par más lejano -->
+				<Border CornerRadius="18"
+                        Background="#0937df"
+                        Padding="18"
+					
+					Margin="0,0,0,18">      
+					<StackPanel>
+						<TextBlock Text="Par de miembros de la familia más lejano"
+                                   Foreground="#bbbbbb"
+                                   FontSize="16"        
+						Margin="0,0,0,6"/>
+						<TextBlock x:Name="FarthestPairNamesText"
+                                   Text="—"
+                                   Foreground="White"
+                                   FontSize="20"        
+						FontWeight="SemiBold"
+						Margin="0,0,0,6"/>
+						<TextBlock x:Name="FarthestPairDistanceText"
+                                   Text="0 km"
+                                   Foreground="White"
+                                   FontSize="32"       
+						FontWeight="Bold"/>
+						<TextBlock Text="Mayor distancia entre dos familiares"
+                                   Foreground="#adaaaa"
+                                   FontSize="14"
+                                   TextWrapping="Wrap"
+                                   Margin="0,10,0,0"/>
+					</StackPanel>
+				</Border>
+
+				<!-- Cuadro para el par más cercano -->
+				<Border CornerRadius="18"
+                        Background="#0937df"
+                        Padding="18"
+                        Margin="0,0,0,18">
+					<StackPanel>
+						<TextBlock Text="Par de miembros de la familia más cercano"
+                                   Foreground="#bbbbbb"
+                                   FontSize="16"
+                                   Margin="0,0,0,6"/>
+						<TextBlock x:Name="ClosestPairNamesText"
+                                   Text="—"
+                                   Foreground="White"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,6"/>
+						<TextBlock x:Name="ClosestPairDistanceText"
+                                   Text="0 km"
+                                   Foreground="White"
+                                   FontSize="32"
+                                   FontWeight="Bold"/>
+						<TextBlock Text="Menor distancia entre dos familiares"
+                                   Foreground="#adaaaa"
+                                   FontSize="14"
+                                   TextWrapping="Wrap"
+                                   Margin="0,10,0,0"/>
+					</StackPanel>
+				</Border>
+
+				<!-- Cuadro para la distancia promedio -->
+				<Border CornerRadius="18"
+                        Background="#0937df"
+                        Padding="18"
+                        Margin="0,0,0,0">
+					
+					<StackPanel>
+						<TextBlock Text="Distancia promedio entre miembros de la familia"
+                                   Foreground="#bbbbbb"
+                                   FontSize="16"
+                                   Margin="0,0,0,6"/>
+						<TextBlock x:Name="AverageDistanceText"
+                                   Text="0 km"
+                                   Foreground="White"
+                                   FontSize="32"
+                                   FontWeight="Bold"
+                                   Margin="0,0,0,6"/>
+						<TextBlock x:Name="AverageDistanceNoteText"
+                                   Text="Promedio de la distancia entre los miembros de la familia"
+                                   Foreground="#adaaaa"
+                                   FontSize="14"
+                                   TextWrapping="Wrap"
+                                   Margin="0,10,0,0"/>
+					</StackPanel>
+				</Border>
+			</StackPanel>
+
+			<!-- Columna derecha para resumen de datos utilizados -->
+			<Border Grid.Column="1"
+                    CornerRadius="18"
+                    Background="White"
+                    Padding="20"
+				    BorderBrush="#dddddd"
+				    BorderThickness="1"
+				    Margin="0,0,0,0"
+				    VerticalAlignment="Stretch">
+				<StackPanel>
+					<TextBlock Text="Datos utilizados"
+                               FontSize="24"        
+					FontWeight="SemiBold"
+					Foreground="#333"
+					Margin="0,0,0,10"/>
+
+					<TextBlock x:Name="SummaryPeopleCountText"
+                               Text="Personas con coordenadas válidas: 0"
+                               Foreground="#444"
+                               FontSize="20"
+                               Margin="0,0,0,4"/>
+
+					<TextBlock x:Name="SummaryPairsCountText"
+                               Text="Pares de familiares considerados: 0"
+                               Foreground="#444"
+                               FontSize="20"
+                               Margin="0,0,0,4"/>
+
+					<TextBlock x:Name="SummaryWarningText"
+                               Text="(Las distancias se calculan con base en las coordenadas de pixeles del mapa, no en kilómetros reales)."
+                               Foreground="#777"
+                               FontSize="16"
+                               TextWrapping="Wrap"
+                               Margin="0,16,0,0"/>
+				</StackPanel>
+			</Border>
+		</Grid>
+	</Grid>
 </Page>
