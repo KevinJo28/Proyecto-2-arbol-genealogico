@@ -1,6 +1,6 @@
 # Proyecto II CE1103: Árbol Genealógico
 
-Este proyecto es una aplicación WPF desarrollada en C# cuyo objetivo principal es gestionar y visualizar un árbol genealógico interactivo, que permite al usuario agregar familiares, verlos ubicados en un mapa y obtener estadísticas útiles sobre sus distancias relativas.
+Este proyecto es una aplicación WPF desarrollada en C# cuyo objetivo principal es gestionar y visualizar un árbol genealógico interactivo, que permite al usuario agregar familiares, verlos ubicados en un mapa y obtener estadísticas sobre sus distancias relativas.
 
 Fue desarrollado como solución al Proyecto II del curso de Algoritmos y Estructuras de Datos I (CE1103) de la carrera de Ingeniería en Computadores del Tecnológico de Costa Rica.
 
