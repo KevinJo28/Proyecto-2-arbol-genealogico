@@ -1,3 +1,39 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio Code
+.vscode/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# NuGet
+*.nupkg
+packages/
+*.snupkg
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backups
+*~ 
+*.bak
+
+# Generated files
+Generated\ Files/
+
+# Publish output
+publish/
+
+# Cache
+*.cache
 ## Build results
 bin/
 obj/
