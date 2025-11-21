@@ -128,7 +128,7 @@ namespace SideBar_Nav.Pages
             {
                 Width = isSelected ? 64 : 58, 
                 Height = isSelected ? 64 : 58, 
-                Stroke = isSelected ? Brushes.Red : Brushes.White, 
+                Stroke = isSelected ? Brushes.DarkRed : Brushes.White, 
                 StrokeThickness = isSelected ? 3 : 2, 
                 Margin = new Thickness(0, 0, 0, 4)
             };
@@ -154,6 +154,7 @@ namespace SideBar_Nav.Pages
                 TextWrapping = TextWrapping.Wrap,
                 TextAlignment = TextAlignment.Center,
                 FontSize = 12
+                
             };
 
             panel.Children.Add(ellipse); 
@@ -229,12 +230,44 @@ namespace SideBar_Nav.Pages
                     Y1 = cy0,
                     X2 = cx,
                     Y2 = cy,
-                    Stroke = new SolidColorBrush(Color.FromArgb(160, 255, 0, 0)), 
+                    Stroke = new SolidColorBrush(Color.FromArgb(160, 161, 22, 13)), 
                     StrokeThickness = 2,
                     SnapsToDevicePixels = true
                 };
 
-                LinesCanvas.Children.Add(line); 
+                LinesCanvas.Children.Add(line);
+
+                // calcula el punto medio de la línea
+                double midX = (cx0 + cx) / 2.0;
+                double midY = (cy0 + cy) / 2.0;
+
+                // cuadro rojo para la distancia
+                var distanceBorder = new Border
+                {
+                    Background = Brushes.DarkRed,
+                    CornerRadius = new CornerRadius(6),
+                    Padding = new Thickness(6, 2, 6, 2),
+                    Opacity = 1
+                };
+
+                var distanceText = new TextBlock
+                {
+                    Text = $"{distancia:0} km",
+                    Foreground = Brushes.White,
+                    FontSize = 10,
+                    FontWeight = FontWeights.Bold
+                };
+
+                distanceBorder.Child = distanceText;
+
+                // centra el borde en el punto medio
+                distanceBorder.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                var desired = distanceBorder.DesiredSize;
+
+                Canvas.SetLeft(distanceBorder, midX - desired.Width / 2);
+                Canvas.SetTop(distanceBorder, midY - desired.Height / 2);
+
+                LinesCanvas.Children.Add(distanceBorder);
 
                 var tb = new TextBlock // textos con las distancias
                 {
@@ -245,7 +278,9 @@ namespace SideBar_Nav.Pages
                 };
 
                 DistancesPanel.Children.Add(tb); 
+
             }
+
         }
     }
 }
