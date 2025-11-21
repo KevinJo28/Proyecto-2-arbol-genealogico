@@ -1,4 +1,4 @@
-﻿<Page x:Class="SideBar_Nav.Pages.Page2"
+﻿<Page x:Class="SideBar_Nav.Pages.Page2"   
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Árbol">
