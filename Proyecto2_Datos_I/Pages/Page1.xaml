@@ -8,24 +8,24 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page1">
 
-    <!-- Grid principal para superponer elementos -->
+    <!-- Grid principal -->
     <Grid Background="#f1f3f5">
 
-        <!-- MAPA (FONDO COMPLETO) -->
+        <!-- Mapa (fondo) -->
         <Image x:Name="WorldMap"
                Source="pack://application:,,,/Proyecto2_Datos_I;component/Images/mapworld.jpg"
                Stretch="UniformToFill"/>
 
-        <!-- LÍNEAS SOBRE EL MAPA -->
+        <!-- Canvas para la líneas sobre el mapa -->
         <Canvas x:Name="LinesCanvas"
                 IsHitTestVisible="False"
                 Background="Transparent"/>
 
-        <!-- MARCADORES SOBRE EL MAPA -->
+        <!-- Marcadores sobre el mapa -->
         <Canvas x:Name="MarkersCanvas"
                 Background="Transparent"/>
 
-        <!-- PANEL FLOTANTE (ISLA) SOBRE EL MAPA -->
+        <!-- Panel de distancia -->
         <Border x:Name="FloatingPanel"
                 CornerRadius="18"             
                 Background="#181818"

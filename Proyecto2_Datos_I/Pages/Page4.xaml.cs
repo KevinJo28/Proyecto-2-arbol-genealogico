@@ -19,9 +19,7 @@ using System.Globalization;
 
 namespace SideBar_Nav.Pages
 {
-    /// <summary>
-    /// Interaction logic for Page4.xaml
-    /// </summary>
+    // PÁGINA DE FORMULARIO DE NUEVO MIEMBRO
     public partial class Page4 : Page
     {
         BitmapImage? bitmapGlobal;
@@ -91,6 +89,15 @@ namespace SideBar_Nav.Pages
                 !double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out double y)) 
             { 
                 MessageBox.Show("Las coordenadas deben tener el formato \"x,y\" en píxeles. Ejemplo: 350,420"); 
+                return; 
+            }
+
+            // Validar que las coordenadas estén dentro del área del mapa
+            if (x < MapBounds.MinX || x > MapBounds.MaxX || y < MapBounds.MinY || y > MapBounds.MaxY) 
+            {
+                MessageBox.Show( // NUEVA
+                    $"Las coordenadas deben estar dentro del mapa.\n" + 
+                    $"X entre {MapBounds.MinX} y {MapBounds.MaxX}, Y entre {MapBounds.MinY} y {MapBounds.MaxY}."); 
                 return; 
             } 
 

@@ -5,6 +5,6 @@ namespace Proyecto2_Datos_I.Dtos
 {
 	public class FamilyDto
 	{
-		public List<PersonDto> People { get; set; } = new List<PersonDto>();
-	}
+		public List<PersonDto> People { get; set; } = new List<PersonDto>(); // lista de personas en la familia almacenadas en el JSON
+    }
 }
