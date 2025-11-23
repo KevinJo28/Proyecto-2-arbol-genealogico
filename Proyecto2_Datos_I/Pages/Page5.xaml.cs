@@ -64,16 +64,28 @@ namespace SideBar_Nav.Pages
             if (madre != null && me != null) { Grafo.LinkParentChild(madre, me); madreName = madre.FullName; }
             if (padre != null && me != null) { Grafo.LinkParentChild(padre, me); padreName = padre.FullName; }
             if (pareja != null && me != null) {Grafo.LinkPartners(pareja, me); parejaName = pareja.FullName; }
-            if (me != null)
+            if(madreName == me?.FullName || padreName == me?.FullName || parejaName == me?.FullName)
+            {
+                MessageBox.Show("Una persona no puede ser el mismo su pareja, madre o padre");
+                this.cmbPersonas.SelectedItem = null;
+                this.cmbPersonas2.SelectedItem = null;
+                this.cmbPersonas3.SelectedItem = null;
+
+
+            }
+            else if (me != null )
             {
                 MessageBox.Show("Se ha agregado a " + me.FullName + " satisfactoriamente \n" + "Padre: " + padreName + "\n Madre: " + madreName + "\n Pareja: " + parejaName);
                 NavigationService?.Navigate(new Uri("Pages/Page6.xaml", UriKind.Relative));
+
             }
             else
             {
                 MessageBox.Show("La casilla de 'Yo' tiene que estar llena");
 
             }
+
+           
             
 
 
