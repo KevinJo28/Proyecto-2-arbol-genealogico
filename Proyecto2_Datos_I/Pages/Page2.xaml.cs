@@ -14,7 +14,8 @@ namespace SideBar_Nav.Pages
     {
         private readonly Grafo _family;
         private Canvas _treeCanvas = null!;
-        private Dictionary<PersonNode, Point> _nodePositions;
+        private readonly Dictionary<PersonNode, Point> _nodePositions;
+
         private const double CARD_WIDTH = 120;
         private const double CARD_HEIGHT = 140;
         private const double HORIZONTAL_SPACING = 40;
@@ -24,8 +25,10 @@ namespace SideBar_Nav.Pages
         public Page2()
         {
             InitializeComponent();
+
             _family = ((App)Application.Current).Family;
             _nodePositions = new Dictionary<PersonNode, Point>();
+
             DibujarArbol();
         }
 
@@ -58,28 +61,26 @@ namespace SideBar_Nav.Pages
                 return;
             }
 
-            var roots = todas.Where(p => p.Parents.Count == 0).ToList();
+            var niveles = BuildLevelsConParejas(todas);
 
-            var niveles = BuildLevelsConParejas(roots);
             CalcularPosicionesConParejas(niveles);
-
             DibujarTodasLasLineas();
             DibujarTarjetas();
 
             TreePanel.Children.Add(_treeCanvas);
         }
 
-        private Dictionary<int, List<PersonNode>> BuildLevelsConParejas(List<PersonNode> rootsOriginal)
+        internal static Dictionary<int, List<PersonNode>> BuildLevelsConParejas(
+            IEnumerable<PersonNode> todasLasPersonasEnumerable)
         {
             var niveles = new Dictionary<int, List<PersonNode>>();
             var nivelAsignado = new Dictionary<PersonNode, int>();
 
-            var todasLasPersonas = _family.PeopleRedOnly.ToList();
+            var todasLasPersonas = todasLasPersonasEnumerable.ToList();
 
-            
             var roots = todasLasPersonas
                 .Where(p => p.Parents.Count == 0 &&
-                        !p.Partners.Any(partner => partner.Parents.Count > 0))
+                            !p.Partners.Any(partner => partner.Parents.Count > 0))
                 .ToList();
 
             if (roots.Count == 0)
@@ -166,8 +167,6 @@ namespace SideBar_Nav.Pages
             return niveles;
         }
 
-        //---------------------------------------------------------------------
-
         private void CalcularPosicionesConParejas(Dictionary<int, List<PersonNode>> niveles)
         {
             double yActual = 50;
@@ -225,7 +224,7 @@ namespace SideBar_Nav.Pages
                 yActual += CARD_HEIGHT + VERTICAL_SPACING;
             }
         }
-        //---------------------------------------------------------------------
+
         private void DibujarTodasLasLineas()
         {
             if (_treeCanvas == null) return;
@@ -263,20 +262,17 @@ namespace SideBar_Nav.Pages
                 }
             }
         }
-        //---------------------------------------------------------------------
-        private PersonNode? EncontrarParejaConHijosCompartidos(PersonNode persona)
+
+        internal static PersonNode? EncontrarParejaConHijosCompartidos(PersonNode persona)
         {
             foreach (var pareja in persona.Partners)
             {
-                if (_nodePositions.ContainsKey(pareja) &&
-                    persona.Children.Any(hijo => pareja.Children.Contains(hijo)))
-                {
+                if (persona.Children.Any(hijo => pareja.Children.Contains(hijo)))
                     return pareja;
-                }
             }
             return null;
         }
-        //---------------------------------------------------------------------
+
         private void DibujarLineaPareja(PersonNode p1, PersonNode p2)
         {
             var pos1 = _nodePositions[p1];
@@ -299,7 +295,7 @@ namespace SideBar_Nav.Pages
                 StrokeThickness = 2
             });
         }
-        //---------------------------------------------------------------------
+
         private void DibujarLineasPadreHijos(PersonNode padre, PersonNode? pareja)
         {
             if (!_nodePositions.ContainsKey(padre)) return;
@@ -381,7 +377,7 @@ namespace SideBar_Nav.Pages
                 });
             }
         }
-        //---------------------------------------------------------------------
+
         private void DibujarTarjetas()
         {
             if (_treeCanvas == null) return;
@@ -398,7 +394,7 @@ namespace SideBar_Nav.Pages
                 _treeCanvas.Children.Add(tarjeta);
             }
         }
-        //---------------------------------------------------------------------
+
         private Border CrearTarjetaPersona(PersonNode p)
         {
             var borde = new Border
@@ -447,8 +443,8 @@ namespace SideBar_Nav.Pages
             borde.Child = stack;
             return borde;
         }
-        //---------------------------------------------------------------------
-        private string GenerarKey(PersonNode p1, PersonNode p2)
+
+        internal static string GenerarKey(PersonNode p1, PersonNode p2)
         {
             var ids = new[] { p1.Id, p2.Id }.OrderBy(x => x);
             return string.Join("-", ids);
