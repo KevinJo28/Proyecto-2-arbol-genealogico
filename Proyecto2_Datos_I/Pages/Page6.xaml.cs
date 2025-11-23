@@ -18,9 +18,7 @@ using System.Windows.Shapes;
 
 namespace SideBar_Nav.Pages
 {
-    /// <summary>
-    /// Interaction logic for Page3.xaml
-    /// </summary>
+    
     public partial class Page6 : Page
     {
         
@@ -30,7 +28,7 @@ namespace SideBar_Nav.Pages
             RefreshGrafo();
         }
 
-
+        //Método para refrescar el contenido del grafo en caso de agregar o eliminar un familiar
         public void RefreshGrafo()
         {
             var ListaDePesonas = ((App)Application.Current).Family.PeopleRedOnly;
@@ -41,12 +39,13 @@ namespace SideBar_Nav.Pages
             }
         }
 
+        //Método utilizado en el botón para eliminar un miembro
         public void Eliminar(object sender, RoutedEventArgs e)
         {
-            var btn = (Button)sender;
+            var btn = (Button)sender; //Se obtiene el botón
             var id = btn.Tag.ToString() as string; // recuperar el id
-            if (id == null) return;
-            MessageBox.Show(id);
+            if (id == null) return; //Evitar valores nulos
+            MessageBox.Show("Se elimino correctamente");
            ((App)Application.Current).Family.Remove(int.Parse(id));
             RefreshGrafo();
 
@@ -57,12 +56,13 @@ namespace SideBar_Nav.Pages
 
 
 
-
+        //Método para navegar a la págida del formulario principal
         public void BtnAdd(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new Uri("Pages/Page4.xaml", UriKind.Relative));
         }
 
+        //Método para navegare a la página del formulario de parentesco
         public void BtnEditar(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new Uri("Pages/Page5.xaml", UriKind.Relative));

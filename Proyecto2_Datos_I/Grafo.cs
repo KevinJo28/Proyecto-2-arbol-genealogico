@@ -16,12 +16,15 @@ namespace Proyecto2_Datos_I_Grafo
         //Lista de nodos para poder utilizar en otras partes (solo se puede ver no se puede editar desde afuera)
         public IEnumerable<PersonNode> PeopleRedOnly => people.Values;
 
+        //Método para agregar una persona al diccionario de nodos
         public void Add(string name, string coords, DateTime birthdate, int age, BitmapImage bitmap, int id, string imagePath)
         {
             PersonNode p = new(name, coords, birthdate, age, bitmap, id, imagePath) ;
             people[p.Id] = p;
 
         }
+
+        //Método para buscar un apersona por medio de la id 
         public PersonNode? Get(int id)
         {
             if (people.TryGetValue(id, out var p))
@@ -34,7 +37,7 @@ namespace Proyecto2_Datos_I_Grafo
             }
         }
 
-
+        //Método eficiente para quitar un miembro de la familia sin dejar archivos basura
         public bool Remove(int id)
         {
             // Buscar el nodo
@@ -70,8 +73,8 @@ namespace Proyecto2_Datos_I_Grafo
             public bool LinkParentChild(PersonNode parent, PersonNode child, bool onlyTwoParents = true)
         {
             if (parent == null || child == null)  return  false; 
-            if (ReferenceEquals(parent, child)) return false;//throw new InvalidOperationException("Una persona no puede ser su propio padre/hijo.");
-            if (DetectionCycle(parent, child)) return false; //throw new InvalidOperationException("El enlace crearía un ciclo en el árbol genealógico.");
+            if (ReferenceEquals(parent, child)) return false;
+            if (DetectionCycle(parent, child)) return false; 
             if (onlyTwoParents && child.Parents.Count >= 2)
                 throw new InvalidOperationException("Este hijo ya tiene 2 padres asignados.");
 
@@ -90,9 +93,10 @@ namespace Proyecto2_Datos_I_Grafo
             return true;
         }
 
+        //Método para evitar ciclos entre hijos y padres. Se usa una pila para ir guardando la referencia del hijo y ver que se tenga a si mismo como hijo
         private bool DetectionCycle(PersonNode parent, PersonNode child)
         {
-            // ¿Existe un camino child -> ... -> parent?
+            
             var visited = new HashSet<int>();
             var stack = new Stack<PersonNode>();
             stack.Push(child);
@@ -111,14 +115,16 @@ namespace Proyecto2_Datos_I_Grafo
 
     }
 
+    //Clase nodo que modela una persona en el grafo
     public class PersonNode
     {
-        int id;
+        //Atributos que debe tener cada miembro en la familia
+        int id; 
         public string fullName;
         public string coords;
         public DateTime birthDate;
         public int age;
-        public BitmapImage bitMap;
+        public BitmapImage bitMap; //Se usa para drogbox
         public string ImagePath { get; set; } = string.Empty; // ruta de la imagen
 
         public int Id   // property
@@ -170,20 +176,9 @@ namespace Proyecto2_Datos_I_Grafo
             this.ImagePath = imagePath ?? string.Empty; // ruta de la imagen
         }
 
-        //Desplegue de la información completa de la persona
-        public void Informacion() {
-            Console.WriteLine("Nombre Completo: " + fullName);
-            Console.WriteLine("Coordenadas de Recidencia: " + coords);
-            Console.WriteLine("Fecha de Nacimiento: " + birthDate);
-            Console.WriteLine("Edad: " + age.ToString());
-
-
-        }
-
-
         // Relaciones:
-        public List<PersonNode> Parents { get; } = new();
-        public List<PersonNode> Children { get; } = new();
+        public List<PersonNode> Parents { get; } = new(); //Lista de adyacencia que representa los padres 
+        public List<PersonNode> Children { get; } = new(); //Lista de adyacencia que representa los hijos
         public HashSet<PersonNode> Partners { get; } = new(); //Se usa un HasSet ya que no es necesario una lista al ser una relación solo de dos personas
 
     }

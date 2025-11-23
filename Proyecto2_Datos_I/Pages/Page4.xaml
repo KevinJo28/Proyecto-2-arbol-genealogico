@@ -31,7 +31,7 @@
                 </StackPanel>
                 <StackPanel  Grid.Column="1" Orientation="Vertical" MaxWidth="250" MaxHeight="40" Margin="2">
                     <TextBlock HorizontalAlignment="Left" Text="Nombre" FontFamily="ubuntu" Foreground="#ffffff" FontSize="10" FontWeight="Bold" />
-                    <TextBox Name="name" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" MinWidth="200" MaxWidth="400" Text="Kevin" Margin="5,5,5,5" TextChanged="TextBox_TextChanged" />
+                    <TextBox Name="name" Foreground="#C4C4C4" Grid.Column="1" BorderThickness="2" MinWidth="200" MaxWidth="400" Text="Kevin" Margin="5,5,5,5" />
                 </StackPanel>
 
                 <StackPanel  Grid.Column="1"  Orientation="Vertical"  MaxWidth="250" MaxHeight="40" Margin="2"  >
