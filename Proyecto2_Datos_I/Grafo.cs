@@ -34,8 +34,40 @@ namespace Proyecto2_Datos_I_Grafo
             }
         }
 
-        //Método para enlazar hijos y padres, recibe el nodo del padre y el del hijo. Esta solo para poder acceptar dos padres por hijo.
-        public bool LinkParentChild(PersonNode parent, PersonNode child, bool onlyTwoParents = true)
+
+        public bool Remove(int id)
+        {
+            // Buscar el nodo
+            if (!people.TryGetValue(id, out var target))
+                return false; // No existe ese ID
+
+            foreach (var parent in target.Parents.ToList())
+            {
+                parent.Children.Remove(target);
+                target.Parents.Remove(parent);
+            }
+
+            //  Quitar este nodo de los padres de cada hijo para no dejar datos basura 
+            foreach (var child in target.Children.ToList())
+            {
+                child.Parents.Remove(target);
+                target.Children.Remove(child);
+            }
+
+            // Quitar este nodo del conjunto de parejas de cada pareja para no dejar datos basura 
+            foreach (var partner in target.Partners.ToList())
+            {
+                partner.Partners.Remove(target);
+                target.Partners.Remove(partner);
+            }
+
+            // Finalmente, quitar el nodo del diccionario
+            return people.Remove(id);
+        }
+
+
+            //Método para enlazar hijos y padres, recibe el nodo del padre y el del hijo. Esta solo para poder acceptar dos padres por hijo.
+            public bool LinkParentChild(PersonNode parent, PersonNode child, bool onlyTwoParents = true)
         {
             if (parent == null || child == null)  return  false; 
             if (ReferenceEquals(parent, child)) return false;//throw new InvalidOperationException("Una persona no puede ser su propio padre/hijo.");

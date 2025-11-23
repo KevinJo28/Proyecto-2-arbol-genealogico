@@ -14,8 +14,8 @@
             <ListBox x:Name="lstPeople" Margin="22,39,22,24">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Width="658" Height="256" Orientation="Horizontal" Margin="6,4">
-
+                        <StackPanel Width="1658" Height="156" Orientation="Horizontal" Margin="6,4" >
+                         
                         <Image Source="{Binding BitMap}" Width="256" Height="256" 
                        Stretch="Uniform" Margin="0,0,8,0"/>
                         <StackPanel>
@@ -26,6 +26,14 @@
                             
                             
                         </StackPanel>
+                        <Button Content="Eliminar"
+                            Width="105" Height="35" FontSize="10"
+                            Click="Eliminar"
+                            Tag="{Binding Id}"
+                            VerticalAlignment="Bottom"
+                     
+                            Style="{StaticResource Btn2}"
+                            Opacity=".4" ></Button>
 
 
                         <ItemsControl ItemsSource="{Binding Parents}" Margin="0,43,0,0" Width="100">
@@ -33,13 +41,15 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding FullName}" FontSize="16" Foreground="#6B7280"/>
-                           
+
                                     </StackPanel>
-                                    
+
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-
+                        
+                    
+                        
 
                     </StackPanel>
                     </DataTemplate>
