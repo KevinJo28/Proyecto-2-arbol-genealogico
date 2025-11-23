@@ -32,7 +32,39 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
-    
+
+    <Style x:Key="Btn2" TargetType="Button">
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#FF00"/>
+        <Setter Property="BorderBrush" Value="#F800"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="2"
+                        CornerRadius="5">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Margin="10"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#000"/>
+                            <Setter Property="BorderBrush" Value="#2E7D32"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#388E3C"/>
+                            <Setter Property="BorderBrush" Value="#1B5E20"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 
 </ResourceDictionary>

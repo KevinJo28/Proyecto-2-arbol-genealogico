@@ -41,7 +41,20 @@ namespace SideBar_Nav.Pages
             }
         }
 
-       
+        public void Eliminar(object sender, RoutedEventArgs e)
+        {
+            var btn = (Button)sender;
+            var id = btn.Tag.ToString() as string; // recuperar el id
+            if (id == null) return;
+            MessageBox.Show(id);
+           ((App)Application.Current).Family.Remove(int.Parse(id));
+            RefreshGrafo();
+
+
+
+        }
+
+
 
 
 
