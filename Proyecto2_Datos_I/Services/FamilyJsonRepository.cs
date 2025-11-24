@@ -11,8 +11,7 @@ namespace Proyecto2_Datos_I.Services
         private static readonly string FilePath = 
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "family.json");
 
-        public static Grafo LoadFamily() // cargar el grafo desde el archivo JSON
-        { 
+        public static Grafo LoadFamily()
             try 
             { 
                 if (!File.Exists(FilePath)) 
@@ -27,10 +26,6 @@ namespace Proyecto2_Datos_I.Services
                 }; 
 
                 FamilyDto? dto = JsonSerializer.Deserialize<FamilyDto>(json, options); 
-                if (dto == null)  // si el archivo está vacío o no es válido
-                { 
-                    return new Grafo(); // retornar un grafo vacío
-                } 
 
                 return GraphMapper.FromDto(dto); 
             } 
@@ -40,7 +35,7 @@ namespace Proyecto2_Datos_I.Services
             } 
         } 
 
-        public static void SaveFamily(Grafo grafo) // guardar el grafo en el archivo JSON
+        public static void SaveFamily(Grafo grafo)
         { 
             try 
             { 
@@ -56,8 +51,10 @@ namespace Proyecto2_Datos_I.Services
                 File.WriteAllText(FilePath, json);
             } 
             catch 
-            { 
-                
+            {
+                System.Diagnostics.Debug.WriteLine($"Error saving: {ex.Message}");
+                MessageBox.Show("Error al guardar el archivo.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
             } 
         } 
     } 

@@ -74,17 +74,15 @@ namespace SideBar_Nav.Pages
 
                     double dx = x2 - x1; 
                     double dy = y2 - y1; 
-                    double d = Math.Sqrt(dx * dx + dy * dy); // calcula la distancia euclidiana
+                    double d = Math.Sqrt(dx * dx + dy * dy);
 
                     // validación para personas en el mismo punto
-                    if (d <= 0) 
+                    if (d == 0) 
                         continue;
 
-                    // datos para el promedio
                     sumaDistancias += d; 
                     conteoPares++;
 
-                    // cálculo de mínimo 
                     if (d < minDist) 
                     { 
                         minDist = d; 
@@ -92,7 +90,6 @@ namespace SideBar_Nav.Pages
                         minB = p2; 
                     }
 
-                    // cálculo de máximo
                     if (d > maxDist) 
                     { 
                         maxDist = d; 
@@ -119,32 +116,17 @@ namespace SideBar_Nav.Pages
             double promedio = sumaDistancias / conteoPares; 
 
             SummaryPairsCountText.Text = $"Pares de familiares considerados: {conteoPares}"; 
-            SummaryWarningText.Text = "(Las distancias se calculan con base en las coordenadas de pixeles del mapa, no en kilómetros reales)."; 
+            SummaryWarningText.Text = "(Las distancias se calculan con base en las coordenadas de pixeles del mapa, no en kilómetros reales).";
 
             // muestra los resultado en los cuadritos
-            if (maxA != null && maxB != null) 
-            { 
-                FarthestPairNamesText.Text = $"{maxA.FullName} — {maxB.FullName}"; 
-                FarthestPairDistanceText.Text = $"{maxDist:0} km"; 
-            } 
-            else 
-            { 
-                FarthestPairNamesText.Text = "No disponible"; 
-                FarthestPairDistanceText.Text = "—"; 
-            } 
 
-            if (minA != null && minB != null) 
-            { 
-                ClosestPairNamesText.Text = $"{minA.FullName} — {minB.FullName}"; 
-                ClosestPairDistanceText.Text = $"{minDist:0} km"; 
-            } 
-            else 
-            { 
-                ClosestPairNamesText.Text = "No disponible"; 
-                ClosestPairDistanceText.Text = "—"; 
-            } 
+            FarthestPairNamesText.Text = $"{maxA!.FullName} — {maxB!.FullName}";
+            FarthestPairDistanceText.Text = $"{maxDist:0} km";
 
-            AverageDistanceText.Text = $"{promedio:0} km"; 
+            ClosestPairNamesText.Text = $"{minA!.FullName} — {minB!.FullName}";
+            ClosestPairDistanceText.Text = $"{minDist:0} km";
+
+            AverageDistanceText.Text = $"{promedio:0} km";
         }
 
         // Método para obtener coordenadas de una persona
@@ -160,10 +142,10 @@ namespace SideBar_Nav.Pages
                 return false; // valida formato
 
             if (!double.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out x)) 
-                return false;  // valida que sea float
+                return false;  
 
             if (!double.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out y)) 
-                return false; // valida que sea float
+                return false; 
 
             // mismos límites del mapa
             if (x < MapBounds.MinX || x > MapBounds.MaxX || y < MapBounds.MinY || y > MapBounds.MaxY) 

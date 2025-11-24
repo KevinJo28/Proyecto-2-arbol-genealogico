@@ -112,7 +112,7 @@ namespace SideBar_Nav.Pages
             {
                 imgSource = person.BitMap; 
             }
-            else if (!string.IsNullOrWhiteSpace(person.ImagePath)) // si no, intentar cargar desde ruta
+            else if (!string.IsNullOrWhiteSpace(person.ImagePath)) 
             {
                 try
                 {
@@ -120,7 +120,7 @@ namespace SideBar_Nav.Pages
                 }
                 catch
                 {
-                    // Imagen inválida, dejamos imgSource en null 
+                    
                 }
             }
 
@@ -171,7 +171,7 @@ namespace SideBar_Nav.Pages
                 _selectedPerson = person; 
                 DibujarMarcadores(); 
                 DibujarLineas(_selectedPerson);
-            } // entonces redibujar marcadores y líneas
+            } 
         }
 
         // Método para dibujar líneas de distancia
@@ -195,11 +195,7 @@ namespace SideBar_Nav.Pages
 
             double cx0 = x0 + 29; // centro aprox del círculo 
             double cy0 = y0 + 29; // el centro en y es igual a x + radio
-            if (_selectedPerson != null && origen == _selectedPerson) 
-            { 
-                cx0 = x0 + 29; 
-                cy0 = y0 + 29; 
-            }
+            
 
             var distancias = grafo.PeopleRedOnly 
                 .Where(p => !ReferenceEquals(p, origen)) // excluir la persona de origen
