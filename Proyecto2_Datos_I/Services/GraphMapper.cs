@@ -56,7 +56,7 @@ namespace Proyecto2_Datos_I.Services
                     }
                     catch
                     {
-                        System.Diagnostics.Debug.WriteLine($"Error loading image: {ex.Message}");
+                     
                     }
                 }
 
