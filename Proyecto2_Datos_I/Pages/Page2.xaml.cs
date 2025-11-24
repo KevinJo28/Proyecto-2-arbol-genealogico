@@ -12,9 +12,15 @@ namespace SideBar_Nav.Pages
 {
     public partial class Page2 : Page
     {
+        // Grafo que contiene todas las personas y sus relaciones
         private readonly Grafo _family;
+
         private Canvas _treeCanvas = null!;
-        private Dictionary<PersonNode, Point> _nodePositions;
+
+        // Posición asignada a cada persona en el Canvas
+        private readonly Dictionary<PersonNode, Point> _nodePositions;
+
+        // Constantes de tamaño y espaciado de las tarjetas
         private const double CARD_WIDTH = 120;
         private const double CARD_HEIGHT = 140;
         private const double HORIZONTAL_SPACING = 40;
@@ -24,21 +30,31 @@ namespace SideBar_Nav.Pages
         public Page2()
         {
             InitializeComponent();
+
+            // Se obtiene el árbol de familia que está en clase App
             _family = ((App)Application.Current).Family;
+
+            // Diccionario donde se gurdan las posiciones calculadas
             _nodePositions = new Dictionary<PersonNode, Point>();
+
+            // Se dibuja el árbol al cargar la página
             DibujarArbol();
         }
 
+        // Navega a la página de agregar persona (Page4)
         public void BtnAdd(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new Uri("Pages/Page4.xaml", UriKind.Relative));
         }
 
+        // Método principal que arma y dibuja todo el árbol
         private void DibujarArbol()
         {
+            // Limpia contenido previo en el panel y las posiciones
             TreePanel.Children.Clear();
             _nodePositions.Clear();
 
+            // Crea el Canvas donde se dibujará el árbol
             _treeCanvas = new Canvas
             {
                 Background = Brushes.White,
@@ -46,8 +62,10 @@ namespace SideBar_Nav.Pages
                 MinHeight = 1000
             };
 
+            // Obtiene la lista de todas las personas
             var todas = _family.PeopleRedOnly.ToList();
 
+            // Si no hay personas, muestra un mensaje y termina
             if (todas.Count == 0)
             {
                 TreePanel.Children.Add(new TextBlock
@@ -58,45 +76,61 @@ namespace SideBar_Nav.Pages
                 return;
             }
 
-            var roots = todas.Where(p => p.Parents.Count == 0).ToList();
+            // Se agrupa personas por niveles (generaciones), considerando parejas
+            var niveles = BuildLevelsConParejas(todas);
 
-            var niveles = BuildLevelsConParejas(roots);
+            // Se calcula la posición de cada persona
             CalcularPosicionesConParejas(niveles);
 
+            // Dibuja las líneas de parejas y padres-hijos
             DibujarTodasLasLineas();
+
+            // Dibuja las tarjetas de cada persona
             DibujarTarjetas();
 
+            // Agrega el Canvas final al panel de la página
             TreePanel.Children.Add(_treeCanvas);
         }
 
-        private Dictionary<int, List<PersonNode>> BuildLevelsConParejas(List<PersonNode> rootsOriginal)
+        // Construye los niveles del árbol (0 = generación superior, 1 = hijos, etc.)
+        // y trata de ubicar a las parejas en el mismo nivel.
+        internal static Dictionary<int, List<PersonNode>> BuildLevelsConParejas(
+            IEnumerable<PersonNode> todasLasPersonasEnumerable)
         {
             var niveles = new Dictionary<int, List<PersonNode>>();
             var nivelAsignado = new Dictionary<PersonNode, int>();
 
-            var todasLasPersonas = _family.PeopleRedOnly.ToList();
+            var todasLasPersonas = todasLasPersonasEnumerable.ToList();
 
-            
+            // Busca raíces: personas sin padres y con parejas que tampoco tengan padres
             var roots = todasLasPersonas
                 .Where(p => p.Parents.Count == 0 &&
-                        !p.Partners.Any(partner => partner.Parents.Count > 0))
+                            !p.Partners.Any(partner => partner.Parents.Count > 0))
                 .ToList();
 
+            // Si no encontra, se usan personas sin padres
             if (roots.Count == 0)
                 roots = todasLasPersonas.Where(p => p.Parents.Count == 0).ToList();
 
+            // Cola para recorrer el grafo en anchura (BFS)
             var cola = new Queue<(PersonNode node, int nivel)>();
             var visitados = new HashSet<PersonNode>();
 
-            foreach (var root in roots.Where(r => r.Children.Count > 0))
-                cola.Enqueue((root, 0));
+            // Encola raíces que tengan hijos (para priorizar ramas activas)
+            foreach (var root in roots)
+            {
+                if (root.Children.Count > 0)
+                    cola.Enqueue((root, 0));
+            }
 
+            // Si ninguna raíz tenía hijos, encola todas las raíces
             if (cola.Count == 0)
             {
                 foreach (var r in roots)
                     cola.Enqueue((r, 0));
             }
 
+            // BFS: asigna niveles a partir de padres a hijos
             while (cola.Count > 0)
             {
                 var (node, nivel) = cola.Dequeue();
@@ -104,11 +138,15 @@ namespace SideBar_Nav.Pages
 
                 nivelAsignado[node] = nivel;
 
-                if (!niveles.ContainsKey(nivel))
-                    niveles[nivel] = new List<PersonNode>();
-                if (!niveles[nivel].Contains(node))
-                    niveles[nivel].Add(node);
+                if (!niveles.TryGetValue(nivel, out var listaNivel))
+                {
+                    listaNivel = new List<PersonNode>();
+                    niveles[nivel] = listaNivel;
+                }
+                if (!listaNivel.Contains(node))
+                    listaNivel.Add(node);
 
+                // Encola los hijos al siguiente nivel
                 foreach (var hijo in node.Children)
                 {
                     if (!visitados.Contains(hijo))
@@ -116,6 +154,7 @@ namespace SideBar_Nav.Pages
                 }
             }
 
+            // Intenta igualar el nivel de las parejas a lo largo de varios intentos
             bool cambios = true;
             int intentos = 0;
 
@@ -126,51 +165,55 @@ namespace SideBar_Nav.Pages
 
                 foreach (var persona in todasLasPersonas)
                 {
-                    if (!nivelAsignado.ContainsKey(persona))
+                    if (!nivelAsignado.TryGetValue(persona, out int nivelPersona))
                         continue;
-
-                    int nivelPersona = nivelAsignado[persona];
 
                     foreach (var pareja in persona.Partners)
                     {
-                        if (!nivelAsignado.ContainsKey(pareja))
+                        // Si la pareja no tiene nivel aún, se asigna igual que a la persona
+                        if (nivelAsignado.ContainsKey(pareja))
+                            continue;
+
+                        nivelAsignado[pareja] = nivelPersona;
+
+                        if (!niveles.TryGetValue(nivelPersona, out var lista))
                         {
-                            nivelAsignado[pareja] = nivelPersona;
-
-                            if (!niveles.ContainsKey(nivelPersona))
-                                niveles[nivelPersona] = new List<PersonNode>();
-
-                            if (!niveles[nivelPersona].Contains(pareja))
-                                niveles[nivelPersona].Add(pareja);
-
-                            cambios = true;
+                            lista = new List<PersonNode>();
+                            niveles[nivelPersona] = lista;
                         }
+
+                        if (!lista.Contains(pareja))
+                            lista.Add(pareja);
+
+                        cambios = true;
                     }
                 }
             }
 
+            // Cualquier persona sin nivel asignado quedará en nivel 0 por defecto
             foreach (var persona in todasLasPersonas)
             {
-                if (!nivelAsignado.ContainsKey(persona))
+                if (nivelAsignado.ContainsKey(persona))
+                    continue;
+
+                if (!niveles.TryGetValue(0, out var listaNivel0))
                 {
-                    nivelAsignado[persona] = 0;
-
-                    if (!niveles.ContainsKey(0))
-                        niveles[0] = new List<PersonNode>();
-
-                    if (!niveles[0].Contains(persona))
-                        niveles[0].Add(persona);
+                    listaNivel0 = new List<PersonNode>();
+                    niveles[0] = listaNivel0;
                 }
+
+                if (!listaNivel0.Contains(persona))
+                    listaNivel0.Add(persona);
             }
 
             return niveles;
         }
 
-        //---------------------------------------------------------------------
-
+        // Calcula la posición de cada persona en el Canvas,
+        // agrupando parejas y distribuyendo los niveles verticalmente.
         private void CalcularPosicionesConParejas(Dictionary<int, List<PersonNode>> niveles)
         {
-            double yActual = 50;
+            double yActual = 50; // Y inicial para el primer nivel
 
             foreach (var kv in niveles.OrderBy(k => k.Key))
             {
@@ -178,6 +221,7 @@ namespace SideBar_Nav.Pages
                 var procesados = new HashSet<PersonNode>();
                 var grupos = new List<List<PersonNode>>();
 
+                // Agrupa personas del nivel en grupos (individual o pareja)
                 foreach (var persona in personasDelNivel)
                 {
                     if (procesados.Contains(persona)) continue;
@@ -185,6 +229,7 @@ namespace SideBar_Nav.Pages
                     var grupo = new List<PersonNode> { persona };
                     procesados.Add(persona);
 
+                    // Busca una pareja que también esté en este nivel y no se haya procesado
                     var parejaEnNivel = persona.Partners
                         .FirstOrDefault(p => personasDelNivel.Contains(p) && !procesados.Contains(p));
 
@@ -197,6 +242,7 @@ namespace SideBar_Nav.Pages
                     grupos.Add(grupo);
                 }
 
+                // Calcula el ancho total de todos los grupos de este nivel
                 double anchoTotal = 0;
                 foreach (var grupo in grupos)
                 {
@@ -206,9 +252,11 @@ namespace SideBar_Nav.Pages
                 }
                 anchoTotal += (grupos.Count - 1) * HORIZONTAL_SPACING;
 
+                // Calcula posición inicial X para centrar el nivel
                 double xInicial = Math.Max(50, (1400 - anchoTotal) / 2);
                 double xActual = xInicial;
 
+                // Asigna posición X,Y a cada persona de cada grupo
                 foreach (var grupo in grupos)
                 {
                     for (int i = 0; i < grupo.Count; i++)
@@ -216,25 +264,31 @@ namespace SideBar_Nav.Pages
                         _nodePositions[grupo[i]] = new Point(xActual, yActual);
                         xActual += CARD_WIDTH;
 
+                        // Espaciado extra entre tarjetas de una misma pareja
                         if (i < grupo.Count - 1)
                             xActual += PAREJA_SPACING;
                     }
+                    // Espacio entre grupos
                     xActual += HORIZONTAL_SPACING;
                 }
 
+                // Avanza al siguiente nivel vertical
                 yActual += CARD_HEIGHT + VERTICAL_SPACING;
             }
         }
-        //---------------------------------------------------------------------
+
+        // Dibuja todas las líneas de parejas y relaciones de padres-hijos
         private void DibujarTodasLasLineas()
         {
             if (_treeCanvas == null) return;
 
+            // HashSets para evitar dibujar la misma relación dos veces
             var parejasDibujadas = new HashSet<string>();
             var relacionesPadresDibujadas = new HashSet<string>();
 
             foreach (var persona in _nodePositions.Keys)
             {
+                // Dibujar líneas entre parejas
                 foreach (var pareja in persona.Partners)
                 {
                     if (_nodePositions.ContainsKey(pareja))
@@ -248,9 +302,13 @@ namespace SideBar_Nav.Pages
                     }
                 }
 
+                // Dibujar líneas entre padres e hijos
                 if (persona.Children.Count > 0)
                 {
+                    // Busca una pareja que tenga hijos en común
                     var parejaConHijos = EncontrarParejaConHijosCompartidos(persona);
+
+                    // Key única para esta relación de padres-hijos
                     string keyRelacion = parejaConHijos != null
                         ? GenerarKey(persona, parejaConHijos)
                         : persona.Id.ToString();
@@ -263,29 +321,31 @@ namespace SideBar_Nav.Pages
                 }
             }
         }
-        //---------------------------------------------------------------------
-        private PersonNode? EncontrarParejaConHijosCompartidos(PersonNode persona)
+
+        // Devuelve la primera pareja que comparte al menos un hijo con la persona
+        internal static PersonNode? EncontrarParejaConHijosCompartidos(PersonNode persona)
         {
             foreach (var pareja in persona.Partners)
             {
-                if (_nodePositions.ContainsKey(pareja) &&
-                    persona.Children.Any(hijo => pareja.Children.Contains(hijo)))
-                {
+                if (persona.Children.Any(hijo => pareja.Children.Contains(hijo)))
                     return pareja;
-                }
             }
             return null;
         }
-        //---------------------------------------------------------------------
+
+        // Dibuja la línea horizontal que conecta a dos parejas
         private void DibujarLineaPareja(PersonNode p1, PersonNode p2)
         {
             var pos1 = _nodePositions[p1];
             var pos2 = _nodePositions[p2];
 
+            // Determina quién está a la izquierda y quién a la derecha
             var izq = pos1.X < pos2.X ? pos1 : pos2;
             var der = pos1.X < pos2.X ? pos2 : pos1;
 
+            // Altura media de la tarjeta
             double y = izq.Y + CARD_HEIGHT / 2;
+            // Línea desde el borde derecho de la tarjeta izquierda al borde izquierdo de la derecha
             double x1 = izq.X + CARD_WIDTH;
             double x2 = der.X;
 
@@ -299,12 +359,14 @@ namespace SideBar_Nav.Pages
                 StrokeThickness = 2
             });
         }
-        //---------------------------------------------------------------------
+
+        // Dibuja las líneas desde los padres (o padre solo) hasta sus hijos
         private void DibujarLineasPadreHijos(PersonNode padre, PersonNode? pareja)
         {
             if (!_nodePositions.ContainsKey(padre)) return;
 
             var posPadre = _nodePositions[padre];
+            // Toma solo hijos que tienen posición en el árbol
             var todosLosHijos = padre.Children.Where(h => _nodePositions.ContainsKey(h)).ToList();
 
             if (todosLosHijos.Count == 0) return;
@@ -312,11 +374,13 @@ namespace SideBar_Nav.Pages
             List<PersonNode> hijos;
             if (pareja != null && _nodePositions.ContainsKey(pareja))
             {
+                // Si hay pareja, usa solo los hijos que comparten
                 hijos = todosLosHijos.Where(h => pareja.Children.Contains(h)).ToList();
                 if (hijos.Count == 0) return;
             }
             else
             {
+                // Si no hay pareja, usa todos los hijos que tenga el padre
                 hijos = todosLosHijos;
             }
 
@@ -324,19 +388,23 @@ namespace SideBar_Nav.Pages
 
             if (pareja != null && _nodePositions.ContainsKey(pareja))
             {
+                // Punto medio entre las tarjetas de los padres
                 var posPareja = _nodePositions[pareja];
                 xInicio = (posPadre.X + posPareja.X + CARD_WIDTH) / 2;
                 yInicio = posPadre.Y + CARD_HEIGHT / 2;
             }
             else
             {
+                // Padre solo: se usa el centro inferior de su tarjeta
                 xInicio = posPadre.X + CARD_WIDTH / 2;
                 yInicio = posPadre.Y + CARD_HEIGHT;
             }
 
+            // Toma la posición del primer hijo para calcular la altura de la barra horizontal
             var primeraPos = _nodePositions[hijos[0]];
             double yInterseccion = primeraPos.Y - 30;
 
+            // Línea vertical desde los padres hasta la barra horizontal
             _treeCanvas.Children.Add(new Line
             {
                 X1 = xInicio,
@@ -347,13 +415,16 @@ namespace SideBar_Nav.Pages
                 StrokeThickness = 2
             });
 
+            // Calcula el rango horizontal donde están los hijos
             var posicionesHijos = hijos.Select(h => _nodePositions[h].X + CARD_WIDTH / 2).ToList();
             double minX = posicionesHijos.Min();
             double maxX = posicionesHijos.Max();
 
+            // Si solo hay un hijo, la barra se reduce a un punto
             double x1Horizontal = hijos.Count == 1 ? xInicio : minX;
             double x2Horizontal = hijos.Count == 1 ? minX : maxX;
 
+            // Barra horizontal sobre los hijos
             _treeCanvas.Children.Add(new Line
             {
                 X1 = x1Horizontal,
@@ -364,6 +435,7 @@ namespace SideBar_Nav.Pages
                 StrokeThickness = 2
             });
 
+            // Baja una línea vertical desde la barra hasta cada hijo
             foreach (var hijo in hijos)
             {
                 var posHijo = _nodePositions[hijo];
@@ -381,7 +453,8 @@ namespace SideBar_Nav.Pages
                 });
             }
         }
-        //---------------------------------------------------------------------
+
+        // Crea y dibuja las tarjetas de todas las personas según sus posiciones
         private void DibujarTarjetas()
         {
             if (_treeCanvas == null) return;
@@ -398,7 +471,8 @@ namespace SideBar_Nav.Pages
                 _treeCanvas.Children.Add(tarjeta);
             }
         }
-        //---------------------------------------------------------------------
+
+        // Crea la tarjeta visual de una persona (borde, imagen, nombre, ID)
         private Border CrearTarjetaPersona(PersonNode p)
         {
             var borde = new Border
@@ -417,6 +491,7 @@ namespace SideBar_Nav.Pages
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
+            // Agrega imagen si la persona tiene BitMap
             if (p.BitMap != null)
             {
                 stack.Children.Add(new Image
@@ -428,6 +503,7 @@ namespace SideBar_Nav.Pages
                 });
             }
 
+            // Nombre completo en negrita
             stack.Children.Add(new TextBlock
             {
                 Text = p.FullName,
@@ -437,6 +513,7 @@ namespace SideBar_Nav.Pages
                 TextWrapping = TextWrapping.Wrap
             });
 
+            // ID de la persona (ayuda a identificar en la lógica interna)
             stack.Children.Add(new TextBlock
             {
                 Text = $"ID: {p.Id}",
@@ -447,8 +524,9 @@ namespace SideBar_Nav.Pages
             borde.Child = stack;
             return borde;
         }
-        //---------------------------------------------------------------------
-        private string GenerarKey(PersonNode p1, PersonNode p2)
+
+        // Genera una clave única para una pareja, independiente del orden
+        internal static string GenerarKey(PersonNode p1, PersonNode p2)
         {
             var ids = new[] { p1.Id, p2.Id }.OrderBy(x => x);
             return string.Join("-", ids);
